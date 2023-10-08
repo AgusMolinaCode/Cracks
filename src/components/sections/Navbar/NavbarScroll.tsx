@@ -28,7 +28,7 @@ export default function NavbarScroll() {
     <Navbar 
         onMenuOpenChange={setIsMenuOpen}
         isBordered
-        className=" backdrop-blur-sm bg-white/35"
+        className=" backdrop-blur-sm bg-white/60"
         shouldHideOnScroll
     >
       <NavbarContent>
@@ -52,7 +52,7 @@ export default function NavbarScroll() {
           </div>
         </NavbarItem>
         <NavbarItem>
-          <Button as={Link} href="#" className="bg-[#758DA3]">
+          <Button as={Link} href="#" className="bg-[#0F52BA]">
             <div className={inter.className}>
               <p className="font-semibold text-white">Cerrar sesión</p>
             </div>

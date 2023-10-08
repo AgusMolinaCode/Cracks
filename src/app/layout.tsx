@@ -2,9 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Providers } from "./providers";
-import Navbar from "@/components/sections/NavbarScroll";
-import Hero from "@/components/sections/Hero/Hero";
-import NavbarScroll from "@/components/sections/NavbarScroll";
+import NavbarScroll from "@/components/sections/Navbar/NavbarScroll";
 
 const inter = Poppins({
   weight: ["100", "400", "600", "800"],

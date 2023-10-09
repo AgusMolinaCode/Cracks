@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { Poppins } from "next/font/google";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import Signed from "@/components/sections/Navbar/Signed";
 import {
   Navbar,
   NavbarBrand,
@@ -25,11 +27,11 @@ export default function NavbarScroll() {
   const menuItems = ["Mi perfil", "Mis partidos", "Cerrar sesión"];
 
   return (
-    <Navbar 
-        onMenuOpenChange={setIsMenuOpen}
-        isBordered
-        className=" backdrop-blur-sm bg-white/60"
-        shouldHideOnScroll
+    <Navbar
+      onMenuOpenChange={setIsMenuOpen}
+      isBordered
+      className=" backdrop-blur-sm bg-white/60"
+      shouldHideOnScroll
     >
       <NavbarContent>
         <NavbarMenuToggle
@@ -38,27 +40,36 @@ export default function NavbarScroll() {
         />
         <NavbarBrand>
           <div className={inter.className}>
-            <p className="font-bold text-2xl">CRACKS</p>
+            <Link href="/">
+            <p className="font-bold text-2xl text-black">CRACKS</p>
+            </Link>
           </div>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
-          <div className={inter.className}>
-            <Link href="#" className="font-semibold text-black">
-              Mi Perfil
-            </Link>
-          </div>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} href="#" className="bg-[#0F52BA]">
+      <SignedIn>
+        <NavbarContent justify="end">
+          <NavbarItem className="hidden lg:flex">
             <div className={inter.className}>
-              <p className="font-semibold text-white">Cerrar sesión</p>
+              <Link href="#" className="font-semibold text-black">
+                Mi Perfil
+              </Link>
             </div>
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
+          </NavbarItem>
+        </NavbarContent>
+        <Signed />
+      </SignedIn>
+      <SignedOut>
+        <NavbarContent justify="end">
+          <NavbarItem>
+            <Button as={Link} href="/sign-in" className="bg-[#0F52BA]">
+              <div className={inter.className}>
+                <p className="font-semibold text-white">Iniciar sesión</p>
+              </div>
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      </SignedOut>
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

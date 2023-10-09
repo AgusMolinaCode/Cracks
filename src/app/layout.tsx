@@ -2,7 +2,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Providers } from "./providers";
+import { ClerkProv } from "./ClerkProv";
 import NavbarScroll from "@/components/sections/Navbar/NavbarScroll";
+import Footer from "@/components/sections/Footer/Footer";
 
 const inter = Poppins({
   weight: ["100", "400", "600", "800"],
@@ -33,10 +35,13 @@ export default function RootLayout({
           borderBottom: "2px solid #dcd5dc",
         }}
       >
-        <Providers>
-          <NavbarScroll />
-          <main className={inter.className}>{children}</main>
-        </Providers>
+        <ClerkProv>
+          <Providers>
+            <NavbarScroll />
+            <main className={inter.className}>{children}</main>
+            <Footer />
+          </Providers>
+        </ClerkProv>
       </body>
     </html>
   );

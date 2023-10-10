@@ -49,9 +49,9 @@ export default function NavbarScroll() {
 
       <SignedIn>
         <NavbarContent justify="end">
-          <NavbarItem className="hidden lg:flex">
+          <NavbarItem className="hidden sm:flex">
             <div className={inter.className}>
-              <Link href="#" className="font-semibold text-black">
+              <Link href="/perfil" className="font-semibold text-black">
                 Mi Perfil
               </Link>
             </div>
@@ -82,7 +82,7 @@ export default function NavbarScroll() {
                   : "foreground"
               }
               className="w-full"
-              href="#"
+              href="/perfil"
               size="lg"
             >
               {item}

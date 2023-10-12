@@ -5,14 +5,14 @@ import Inputs from "@/components/sections/Perfil/Inputs";
 
 const MiPerfil = () => {
   return (
-    <div className="min-h-screen px-3 lg:px-56 pt-10">
+    <div className="px-3 lg:px-56 pt-10">
       <div>
         <CurrentUser />
         <h2 className="text-gray-600 font-semibold">
           Completa tu perfil, para que puedas encontrar partidos y jugadores.
         </h2>
       </div>
-      <div className="flex flex-wrap justify-center gap-10 mt-8 items-center">
+      <div className="flex flex-wrap justify-center gap-10 my-24 items-center">
         <div>
           <Image
             src="/image-not-found.jpeg"

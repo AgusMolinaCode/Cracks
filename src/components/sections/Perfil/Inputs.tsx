@@ -13,7 +13,7 @@ const animals = [
 
 export default function Inputs() {
   return (
-    <div className="flex flex-col gap-4 2xl:w-[550px]">
+    <div className="flex flex-col gap-4 2xl:w-[550px] bg-[#f4ebc5]/50 p-4 rounded-3xl border border-black">
       <div className="flex gap-4">
         <Input
           type="text"
@@ -21,6 +21,7 @@ export default function Inputs() {
           label="Nombre y Apellido"
           size="lg"
           required
+          className=""
         />
         <Input
           type="number"
@@ -64,11 +65,11 @@ export default function Inputs() {
             <SelectItem key={animal.value}>{animal.label}</SelectItem>
           )}
         </Select>
-        <input 
-            type="file" 
-            className=""
-            placeholder="Subir foto"
-            accept=".jpg, .jpeg, .png" 
+        <input
+          type="file"
+          className=""
+          placeholder="Subir foto"
+          accept=".jpg, .jpeg, .png"
         />
       </div>
     </div>

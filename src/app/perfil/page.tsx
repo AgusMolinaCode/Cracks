@@ -26,6 +26,9 @@ const MiPerfil = () => {
           <Inputs />
         </div>
       </div>
+      <div>
+        
+      </div>
     </div>
   );
 };

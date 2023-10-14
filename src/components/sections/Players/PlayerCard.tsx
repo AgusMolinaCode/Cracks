@@ -6,10 +6,12 @@ import PlayerModal from "./PlayerModal";
 interface PlayerCardProps {
   name: string;
   city: string;
-  imageSrc: string;
+  profilePicture: string;
+  description: string;
+  whatsapp: string;
 }
 
-const PlayerCard: React.FC<PlayerCardProps> = ({ name, city, imageSrc }) => {
+const PlayerCard: React.FC<PlayerCardProps> = ({ name, city, profilePicture,whatsapp,description }) => {
   return (
     <Card
       isFooterBlurred
@@ -20,7 +22,7 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ name, city, imageSrc }) => {
         alt={name}
         className="object-cover p-2"
         height={350}
-        src={imageSrc}
+        src={profilePicture}
         width={350}
       />
       <CardFooter className="justify-center gap-3  border-2 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 shadow-small z-10 bg-white/80">
@@ -30,8 +32,8 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ name, city, imageSrc }) => {
         <PlayerModal
             name={name}
             city={city}
-            wsp={123456789}
-            description={"Dolor do tempor commodo occaecat id cillum commodo ea proident nisi voluptate esse. Voluptate sit occaecat ipsum fugiat voluptate quis culpa pariatur. In adipisicing occaecat culpa esse esse nostrud veniam commodo. Fugiat deserunt anim ad occaecat do sunt."}
+            description={description}
+            whatsapp={whatsapp}
         />
       </CardFooter>
     </Card>

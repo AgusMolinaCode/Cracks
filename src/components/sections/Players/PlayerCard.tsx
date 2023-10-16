@@ -21,9 +21,9 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ name, city, profilePicture,what
       <Image
         alt={name}
         className="object-cover p-2"
-        height={350}
-        src={profilePicture}
-        width={350}
+        height={450}
+        src='/messi.png'
+        width={450}
       />
       <CardFooter className="justify-center gap-3  border-2 overflow-hidden py-1 absolute before:rounded-xl rounded-large bottom-1 shadow-small z-10 bg-white/80">
         <p className="text-md font-semibold text-black">

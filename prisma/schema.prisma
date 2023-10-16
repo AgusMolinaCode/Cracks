@@ -14,7 +14,7 @@ model User {
   updatedAt        DateTime @updatedAt
   whatsapp         String
   city             String
-  state            String
+  state            String?
   description      String
   soccerPlayerType String?
   profilePicture   String?

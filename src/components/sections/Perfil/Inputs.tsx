@@ -4,6 +4,7 @@ import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import CurrentUserId from "./CurrentUserId";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import ciudades from "./Ciudades";
 
 const posiciones = [
   { label: "Delantero", value: "delantero" },
@@ -17,24 +18,24 @@ const notify = () => toast.success("Formulario enviado!");
 export default function Inputs() {
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
-  const [state, setState] = useState("");
   const [description, setDescription] = useState("");
   const [soccerPlayerType, setSoccerPlayerType] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+
+  console.log(city);
 
   const router = useRouter();
 
   const isFormValid =
     name !== "" &&
     city !== "" &&
-    state !== "" &&
     description !== "" &&
     soccerPlayerType !== "" &&
     whatsapp !== "";
 
   return (
-    <div className="flex flex-col gap-4 2xl:w-[550px] bg-[#f4ebc5]/50 p-4 rounded-3xl border border-black">
+    <div className="flex flex-col gap-4 w-[320px] sm:w-full 2xl:w-[550px] bg-[#f4ebc5]/60 p-4 rounded-3xl border border-black">
       <form
         onSubmit={async (e) => {
           e.preventDefault();
@@ -46,7 +47,6 @@ export default function Inputs() {
             body: JSON.stringify({
               name,
               city,
-              state,
               description,
               soccerPlayerType,
               profilePicture,
@@ -57,7 +57,7 @@ export default function Inputs() {
             },
           });
           setTimeout(() => {
-            router.push('/');
+            router.push("/");
           }, 1500);
         }}
       >
@@ -79,24 +79,6 @@ export default function Inputs() {
             onChange={(e) => setWhatsapp(e.target.value)}
           />
         </div>
-        <div className="flex gap-4 py-2">
-          <Input
-            type="text"
-            variant={"underlined"}
-            label="Ciudad"
-            size="lg"
-            required
-            onChange={(e) => setCity(e.target.value)}
-          />
-          <Input
-            type="text"
-            variant={"underlined"}
-            label="Provincia"
-            size="lg"
-            required
-            onChange={(e) => setState(e.target.value)}
-          />
-        </div>
         <Textarea
           variant="underlined"
           label="Description"
@@ -105,11 +87,26 @@ export default function Inputs() {
           className="col-span-12 md:col-span-6 mb-6 md:mb-0 py-2"
           onChange={(e) => setDescription(e.target.value)}
         />
+        <div className="flex gap-4">
+          <Select
+            items={ciudades}
+            variant="faded"
+            label="Tu ciudad"
+            placeholder="Ciudad"
+            className="py-4"
+            onChange={(e) => setCity(e.target.value)}
+          >
+            {(ciudad) => (
+              <SelectItem key={ciudad.id}>{ciudad.label}</SelectItem>
+            )}
+          </Select>
+        </div>
         <div className="flex flex-col gap-4">
           <Select
             items={posiciones}
+            variant="faded"
             label="Tu posicion en la cancha"
-            placeholder="Posicion en la cancha"
+            placeholder="Posicion"
             className="py-4"
             onChange={(e) => setSoccerPlayerType(e.target.value)}
           >

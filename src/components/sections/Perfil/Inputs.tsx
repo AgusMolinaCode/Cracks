@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
-import CurrentUserId from "./CurrentUserId";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import ciudades from "./Ciudades";

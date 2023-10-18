@@ -1,16 +1,18 @@
-"use client";
+'use client';
 import React, { useState } from "react";
-import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
+import {
+  Avatar,
+  Button,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+} from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import ciudades from "./Ciudades";
-
-const posiciones = [
-  { label: "Delantero", value: "delantero" },
-  { label: "Mediocampista", value: "mediocampista" },
-  { label: "Defensor", value: "defensor" },
-  { label: "Arquero", value: "arquero" },
-];
+import ciudades from "./Data/Ciudades";
+import Posiciones from "./Data/Posiciones";
+import Avatars from "./Data/Avatar";
 
 const notify = () => toast.success("Formulario enviado!");
 
@@ -21,8 +23,7 @@ export default function Inputs() {
   const [soccerPlayerType, setSoccerPlayerType] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-
-  console.log(city);
+  const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
 
   const router = useRouter();
 
@@ -33,104 +34,126 @@ export default function Inputs() {
     soccerPlayerType !== "" &&
     whatsapp !== "";
 
+  const handleAvatarClick = (avatar: any) => {
+    setSelectedAvatar(avatar.id);
+    setProfilePicture(avatar.value);
+    console.log(`Avatar seleccionado: ${avatar.value}`);
+  };
+
   return (
-    <div className="flex flex-col gap-4 w-[320px] sm:w-full 2xl:w-[550px] bg-[#f4ebc5]/60 p-4 rounded-3xl border border-black">
-      <form
-        onSubmit={async (e) => {
-          e.preventDefault();
-          if (!isFormValid) {
-            return;
-          }
-          const res = await fetch("/api/notes", {
-            method: "POST",
-            body: JSON.stringify({
-              name,
-              city,
-              description,
-              soccerPlayerType,
-              profilePicture,
-              whatsapp,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          setTimeout(() => {
-            router.push("/");
-          }, 1500);
-        }}
-      >
-        <div className="flex gap-4">
-          <Input
-            type="text"
-            variant={"underlined"}
-            label="Nombre y Apellido"
-            size="lg"
-            required
-            onChange={(e) => setName(e.target.value)}
+    <div className="flex flex-col items-center justify-center gap-4">
+      <h2 className="font-semibold text-gray-500 sm:text-2xl">
+        Selecciona tu avatar
+      </h2>
+      <div className="flex flex-wrap gap-4 justify-center mx-auto">
+        {Avatars.map((avatar) => (
+          <div key={avatar.id} className="">
+            <Avatar
+              src={avatar.value}
+              alt="soccer"
+              className={`w-[110px] h-[110px] transform transition-all duration-500 cursor-pointer ${
+                selectedAvatar === avatar.id ? "scale-110" : ""
+              }`}
+              color="primary"
+              isBordered
+              onClick={() => handleAvatarClick(avatar)}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex flex-col gap-4  bg-[#f4ebc5]/60 p-4 px-2 rounded-3xl border border-black w-full">
+        <form
+          onSubmit={async (e) => {
+            e.preventDefault();
+            if (!isFormValid) {
+              return;
+            }
+            const res = await fetch("/api/notes", {
+              method: "POST",
+              body: JSON.stringify({
+                name,
+                city,
+                description,
+                soccerPlayerType,
+                profilePicture,
+                whatsapp,
+                selectedAvatar,
+              }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            setTimeout(() => {
+              router.push("/");
+            }, 1500);
+          }}
+        >
+          <div className="flex flex-wrap sm:gap-4">
+            <Input
+              type="text"
+              variant={"underlined"}
+              label="Nombre y Apellido"
+              size="lg"
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Input
+              type="text"
+              variant={"underlined"}
+              label="Whatsapp"
+              size="lg"
+              required
+              onChange={(e) => setWhatsapp(e.target.value)}
+            />
+          </div>
+          <Textarea
+            variant="underlined"
+            label="Description"
+            labelPlacement="outside"
+            placeholder="Enter your description"
+            className="col-span-12 md:col-span-6 mb-6 md:mb-0 py-2"
+            onChange={(e) => setDescription(e.target.value)}
           />
-          <Input
-            type="text"
-            variant={"underlined"}
-            label="Whatsapp"
-            size="lg"
-            required
-            onChange={(e) => setWhatsapp(e.target.value)}
-          />
-        </div>
-        <Textarea
-          variant="underlined"
-          label="Description"
-          labelPlacement="outside"
-          placeholder="Enter your description"
-          className="col-span-12 md:col-span-6 mb-6 md:mb-0 py-2"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <div className="flex gap-4">
-          <Select
-            items={ciudades}
-            variant="faded"
-            label="Tu ciudad"
-            placeholder="Ciudad"
-            className="py-4"
-            onChange={(e) => setCity(e.target.value)}
-          >
-            {(ciudad) => (
-              <SelectItem key={ciudad.id}>{ciudad.label}</SelectItem>
-            )}
-          </Select>
-        </div>
-        <div className="flex flex-col gap-4">
-          <Select
-            items={posiciones}
-            variant="faded"
-            label="Tu posicion en la cancha"
-            placeholder="Posicion"
-            className="py-4"
-            onChange={(e) => setSoccerPlayerType(e.target.value)}
-          >
-            {(posicion) => (
-              <SelectItem key={posicion.value}>{posicion.label}</SelectItem>
-            )}
-          </Select>
-          <input
-            type="file"
-            className=""
-            placeholder="Subir foto"
-            accept=".jpg, .jpeg, .png"
-            onChange={(e) => setProfilePicture(e.target.value)}
-          />
-          <Button
-            type="submit"
-            className="bg-[#f4ebc5] text-black border-2 w-[18rem] flex justify-center mx-auto border-black"
-            isDisabled={!isFormValid}
-            onClick={notify}
-          >
-            Enviar
-          </Button>
-        </div>
-      </form>
-      <Toaster />
+          <div className="flex gap-2 ">
+            <Select
+              items={ciudades}
+              variant="faded"
+              label="Tu ciudad"
+              placeholder="Ciudad"
+              className="py-4"
+              onChange={(e) => setCity(e.target.value)}
+            >
+              {(ciudad) => (
+                <SelectItem key={ciudad.value}>{ciudad.label}</SelectItem>
+              )}
+            </Select>
+            <Select
+              items={Posiciones}
+              variant="faded"
+              label="Tu posicion en la cancha"
+              placeholder="Posicion"
+              className="py-4"
+              onChange={(e) => setSoccerPlayerType(e.target.value)}
+            >
+              {(posicion) => (
+                <SelectItem key={posicion.value}>{posicion.label}</SelectItem>
+              )}
+            </Select>
+          </div>
+          <div className="">
+            <Button
+              type="submit"
+              className="bg-[#f4ebc5] text-black border-2 w-[18rem] flex justify-center mx-auto border-black"
+              isDisabled={!isFormValid}
+              onClick={notify}
+            >
+              Enviar
+            </Button>
+          </div>
+        </form>
+        <Toaster />
+      </div>
     </div>
   );
 }

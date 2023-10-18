@@ -23,15 +23,17 @@ const PlayerSelected = ({ data, onCityChange }: Props) => {
       <SelectItem key={0} value="" onClick={() => handleCityChange(null)}>
         Todas las ciudades
       </SelectItem>,
-      ...data.map((ciudad: PlayerInterface) => (
-        <SelectItem
-          key={ciudad.id}
-          value={ciudad.city}
-          onClick={() => handleCityChange(ciudad.city)}
-        >
-          {ciudad.city}
-        </SelectItem>
-      )),
+      ...data
+        .sort((a, b) => a.city.localeCompare(b.city))
+        .map((ciudad: PlayerInterface) => (
+          <SelectItem
+            key={ciudad.id}
+            value={ciudad.city}
+            onClick={() => handleCityChange(ciudad.city)}
+          >
+            {ciudad.city}
+          </SelectItem>
+        )),
     ],
   };
 

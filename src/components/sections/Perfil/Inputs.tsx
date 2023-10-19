@@ -1,7 +1,7 @@
-'use client';
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 import {
-  Avatar,
   Button,
   Input,
   Select,
@@ -12,18 +12,22 @@ import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import ciudades from "./Data/Ciudades";
 import Posiciones from "./Data/Posiciones";
-import Avatars from "./Data/Avatar";
+import AvatarSelector from "./AvatarSelector";
 
 const notify = () => toast.success("Formulario enviado!");
 
 export default function Inputs() {
+  const { userId } = useAuth();
+
   const [name, setName] = useState("");
   const [city, setCity] = useState("");
   const [description, setDescription] = useState("");
   const [soccerPlayerType, setSoccerPlayerType] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [clerkId, setClerkId] = useState(userId);
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
+  const [hasProfile, setHasProfile] = useState(false);
 
   const router = useRouter();
 
@@ -34,33 +38,25 @@ export default function Inputs() {
     soccerPlayerType !== "" &&
     whatsapp !== "";
 
-  const handleAvatarClick = (avatar: any) => {
+  const handleAvatarSelected = (avatar: any) => {
     setSelectedAvatar(avatar.id);
     setProfilePicture(avatar.value);
-    console.log(`Avatar seleccionado: ${avatar.value}`);
   };
+
+  useEffect(() => {
+    console.log(`Consultando perfiles`);
+    const fetchProfiles = async () => {
+      const res = await fetch(`/api/notes`);
+      const data = await res.json();
+      const hasProfile = data.some((profile: any) => profile.clerkId === userId);
+      setHasProfile(hasProfile);
+      console.log(`El usuario ${clerkId} ${hasProfile ? "ya tiene" : "no tiene"} un perfil`);
+    };
+    fetchProfiles();
+  }, [clerkId]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
-      <h2 className="font-semibold text-gray-500 sm:text-2xl">
-        Selecciona tu avatar
-      </h2>
-      <div className="flex flex-wrap gap-4 justify-center mx-auto">
-        {Avatars.map((avatar) => (
-          <div key={avatar.id} className="">
-            <Avatar
-              src={avatar.value}
-              alt="soccer"
-              className={`w-[110px] h-[110px] transform transition-all duration-500 cursor-pointer ${
-                selectedAvatar === avatar.id ? "scale-110" : ""
-              }`}
-              color="primary"
-              isBordered
-              onClick={() => handleAvatarClick(avatar)}
-            />
-          </div>
-        ))}
-      </div>
       <div className="flex flex-col gap-4  bg-[#f4ebc5]/60 p-4 px-2 rounded-3xl border border-black w-full">
         <form
           onSubmit={async (e) => {
@@ -78,6 +74,7 @@ export default function Inputs() {
                 profilePicture,
                 whatsapp,
                 selectedAvatar,
+                clerkId,
               }),
               headers: {
                 "Content-Type": "application/json",
@@ -89,6 +86,13 @@ export default function Inputs() {
             }, 1500);
           }}
         >
+          <h2 className="font-semibold text-gray-500 sm:text-2xl pb-2">
+            Selecciona tu avatar
+          </h2>
+          <AvatarSelector
+            onAvatarSelected={handleAvatarSelected}
+            selectedAvatar={selectedAvatar}
+          />
           <div className="flex flex-wrap sm:gap-4">
             <Input
               type="text"
@@ -145,10 +149,10 @@ export default function Inputs() {
             <Button
               type="submit"
               className="bg-[#f4ebc5] text-black border-2 w-[18rem] flex justify-center mx-auto border-black"
-              isDisabled={!isFormValid}
+              isDisabled={!isFormValid || hasProfile}
               onClick={notify}
             >
-              Enviar
+              {hasProfile ? "Ya tienes un perfil" : "Crear perfil"}
             </Button>
           </div>
         </form>

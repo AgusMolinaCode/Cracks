@@ -24,7 +24,7 @@ const inter = Poppins({
 export default function NavbarScroll() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = ["Mi perfil", "Mis partidos", "Cerrar sesión"];
+  const menuItems = ["Mi perfil"];
 
   return (
     <Navbar
@@ -41,7 +41,7 @@ export default function NavbarScroll() {
         <NavbarBrand>
           <div className={inter.className}>
             <Link href="/">
-            <p className="font-bold text-2xl text-black">CRACKS</p>
+              <p className="font-bold text-2xl text-black">CRACKS</p>
             </Link>
           </div>
         </NavbarBrand>
@@ -71,24 +71,11 @@ export default function NavbarScroll() {
         </NavbarContent>
       </SignedOut>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? "primary"
-                  : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
-              }
-              className="w-full"
-              href="/perfil"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+        <NavbarMenuItem>
+          <Link color={"primary"} className="w-full font-bold text-2xl" href="/perfil" size="lg">
+            Mi perfil
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>
   );

@@ -15,6 +15,7 @@ interface PlayerModalProps {
   city: string;
   whatsapp: string;
   description: string;
+  soccerPlayerType: string;
 }
 
 const PlayerModal: React.FC<PlayerModalProps> = ({
@@ -22,6 +23,7 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
   city,
   whatsapp,
   description,
+  soccerPlayerType,
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -39,6 +41,7 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
                 <p>{description}</p>
                 <p>
                   Ciudad: <span className="font-bold">{city}</span>
+                  Posicion favorita: <span className="font-bold">{soccerPlayerType}</span>
                 </p>
               </ModalBody>
               <ModalFooter>

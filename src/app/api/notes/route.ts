@@ -25,7 +25,7 @@ export async function POST(request: Request) {
       whatsapp,
       name,
       city,
-      state,
+      clerkId,
       description,
       soccerPlayerType,
       profilePicture,
@@ -35,7 +35,7 @@ export async function POST(request: Request) {
       data: {
         name,
         city,
-        state,
+        clerkId,
         description,
         soccerPlayerType,
         profilePicture,

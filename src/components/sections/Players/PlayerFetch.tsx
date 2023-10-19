@@ -48,6 +48,7 @@ const PlayerFetch = () => {
                   name={player.name}
                   city={player.city}
                   profilePicture={player.profilePicture}
+                  soccerPlayerType={player.soccerPlayerType}
                   description={player.description}
                   whatsapp={player.whatsapp}
                 />

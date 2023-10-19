@@ -1,6 +1,5 @@
 import React from "react";
 import CurrentUser from "@/components/sections/Perfil/CurrentUser";
-import Image from "next/image";
 import Inputs from "@/components/sections/Perfil/Inputs";
 
 const MiPerfil = () => {

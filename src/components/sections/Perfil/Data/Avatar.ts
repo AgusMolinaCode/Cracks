@@ -5,27 +5,27 @@ interface Avatar {
 const Avatars:Avatar[] = [
     {
         id: 1,
-        value: "/messi.png"
+        value: "/julian.jpeg"
     },
     {
         id: 2,
-        value: "/messi.png"
+        value: "/diegote.jpeg"
     },
     {
         id: 3,
-        value: "/messi.png"
+        value: "/garnacho.jpeg"
     },
     {
         id: 4,
-        value: "/messi.png"
+        value: "/paulo.jpeg"
     },
     {
         id: 5,
-        value: "/messi.png"
+        value: "/leo.jpeg"
     },
     {
         id: 6,
-        value: "/messi.png"
+        value: "/bicho.jpeg"
     },
 ]
 

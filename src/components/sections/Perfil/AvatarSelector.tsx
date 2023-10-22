@@ -1,7 +1,8 @@
-'use client';
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Avatar } from "@nextui-org/react";
 import Avatars from "./Data/Avatar";
+import { useAuth } from "@clerk/nextjs";
 
 type AvatarSelectorProps = {
   onAvatarSelected: (avatar: any) => void;
@@ -15,6 +16,23 @@ export default function AvatarSelector({
   const handleAvatarClick = (avatar: any) => {
     onAvatarSelected(avatar);
   };
+
+  const { userId } = useAuth();
+  const [hasProfile, setHasProfile] = useState(false);
+  const [clerkId, setClerkId] = useState(userId);
+
+  useEffect(() => {
+    console.log(`Consultando perfiles`);
+    const fetchProfiles = async () => {
+      const res = await fetch(`/api/notes`);
+      const data = await res.json();
+      const hasProfile = data.some(
+        (profile: any) => profile.clerkId === userId
+      );
+      setHasProfile(hasProfile);
+    };
+    fetchProfiles();
+  }, [clerkId]);
 
   return (
     <div className="flex flex-wrap gap-6 p-3 justify-center mx-auto">

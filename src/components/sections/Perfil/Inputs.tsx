@@ -1,20 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
-import {
-  Button,
-  Input,
-  Select,
-  SelectItem,
-  Textarea,
-} from "@nextui-org/react";
+import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import ciudades from "./Data/Ciudades";
 import Posiciones from "./Data/Posiciones";
 import AvatarSelector from "./AvatarSelector";
+import DeleteButton from "./DeleteButton";
+import { Profile } from "../../../libs/interfaces/Profile";
+import EditButton from "./EditButton";
 
-const notify = () => toast.success("Formulario enviado!");
+const notify = () => toast.success("Nuevo usuario creado!");
+const notifyEditar = () => toast.success("Usuario editado!");
 
 export default function Inputs() {
   const { userId } = useAuth();
@@ -28,6 +26,8 @@ export default function Inputs() {
   const [clerkId, setClerkId] = useState(userId);
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
   const [hasProfile, setHasProfile] = useState(false);
+  const [isAvatarSelected, setIsAvatarSelected] = useState(false);
+  const [profileId, setProfileId] = useState(0);
 
   const router = useRouter();
 
@@ -36,21 +36,24 @@ export default function Inputs() {
     city !== "" &&
     description !== "" &&
     soccerPlayerType !== "" &&
-    whatsapp !== "";
+    whatsapp !== "" &&
+    selectedAvatar !== null &&
+    isAvatarSelected;
 
   const handleAvatarSelected = (avatar: any) => {
     setSelectedAvatar(avatar.id);
     setProfilePicture(avatar.value);
+    setIsAvatarSelected(true);
   };
 
   useEffect(() => {
-    console.log(`Consultando perfiles`);
     const fetchProfiles = async () => {
       const res = await fetch(`/api/notes`);
       const data = await res.json();
-      const hasProfile = data.some((profile: any) => profile.clerkId === userId);
+      const hasProfile = data.find(
+        (profile: any) => profile.clerkId === userId
+      );
       setHasProfile(hasProfile);
-      console.log(`El usuario ${clerkId} ${hasProfile ? "ya tiene" : "no tiene"} un perfil`);
     };
     fetchProfiles();
   }, [clerkId]);
@@ -86,15 +89,23 @@ export default function Inputs() {
             }, 1500);
           }}
         >
-          <h2 className="font-semibold text-gray-500 sm:text-2xl pb-2">
-            Selecciona tu avatar
-          </h2>
+          <div className="flex justify-between items-center">
+            <div>
+              <h2 className="font-semibold text-gray-500 sm:text-2xl pb-2">
+                Selecciona tu avatar
+              </h2>
+            </div>
+            <div className="gap-2 flex pb-2">
+              <DeleteButton />
+            </div>
+          </div>
           <AvatarSelector
             onAvatarSelected={handleAvatarSelected}
             selectedAvatar={selectedAvatar}
           />
           <div className="flex flex-wrap sm:gap-4">
             <Input
+              value={name}
               type="text"
               variant={"underlined"}
               label="Nombre y Apellido"
@@ -146,14 +157,28 @@ export default function Inputs() {
             </Select>
           </div>
           <div className="">
-            <Button
-              type="submit"
-              className="bg-[#f4ebc5] text-black border-2 w-[18rem] flex justify-center mx-auto border-black"
-              isDisabled={!isFormValid || hasProfile}
-              onClick={notify}
-            >
-              {hasProfile ? "Ya tienes un perfil" : "Crear perfil"}
-            </Button>
+            {hasProfile ? (
+              <EditButton
+                id={profileId}
+                name={name}
+                city={city}
+                description={description}
+                soccerPlayerType={soccerPlayerType}
+                profilePicture={profilePicture}
+                whatsapp={whatsapp}
+                selectedAvatar={selectedAvatar}
+                OnClick={notifyEditar}
+              />
+            ) : (
+              <Button
+                type="submit"
+                className="bg-[#f4ebc5] text-black border-2 w-[18rem] flex justify-center mx-auto border-black"
+                isDisabled={!isFormValid}
+                onClick={notify}
+              >
+                Crear perfil
+              </Button>
+            )}
           </div>
         </form>
         <Toaster />

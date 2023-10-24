@@ -1,6 +1,6 @@
 import React from "react";
-import CurrentUser from "@/components/sections/Perfil/CurrentUser";
-import Inputs from "@/components/sections/Perfil/Inputs";
+import CurrentUser from "@/app/components/sections/Perfil/CurrentUser";
+import Inputs from "@/app/components/sections/Perfil/Inputs";
 
 const MiPerfil = () => {
   return (

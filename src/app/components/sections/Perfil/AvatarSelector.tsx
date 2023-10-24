@@ -32,7 +32,7 @@ export default function AvatarSelector({
       setHasProfile(hasProfile);
     };
     fetchProfiles();
-  }, [clerkId]);
+  }, []);
 
   return (
     <div className="flex flex-wrap gap-6 p-3 justify-center mx-auto">

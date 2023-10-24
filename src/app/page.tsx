@@ -1,5 +1,5 @@
-import Hero from "@/components/sections/Hero/Hero";
-import Players from "@/components/sections/Players/Players";
+import Hero from "@/app/components/sections/Hero/Hero";
+import Players from "@/app/components/sections/Players/Players";
 
 export default function Home() {
   return (

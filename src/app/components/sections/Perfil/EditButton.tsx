@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@nextui-org/react";
+import { Button, Tooltip } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
@@ -87,7 +87,7 @@ const EditButton = ({
       onClick={handleEdit}
       isDisabled={!isFormValid}
     >
-      Editar perfil
+      Guardar Cambios
     </Button>
   );
 };

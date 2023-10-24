@@ -8,7 +8,7 @@ import ciudades from "./Data/Ciudades";
 import Posiciones from "./Data/Posiciones";
 import AvatarSelector from "./AvatarSelector";
 import DeleteButton from "./DeleteButton";
-import { Profile } from "../../../libs/interfaces/Profile";
+import { Profile } from "../../../../libs/interfaces/Profile";
 import EditButton from "./EditButton";
 
 const notify = () => toast.success("Nuevo usuario creado!");
@@ -56,7 +56,7 @@ export default function Inputs() {
       setHasProfile(hasProfile);
     };
     fetchProfiles();
-  }, [clerkId]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-center gap-4">
@@ -96,13 +96,22 @@ export default function Inputs() {
               </h2>
             </div>
             <div className="gap-2 flex pb-2">
-              <DeleteButton />
+              {hasProfile ? <DeleteButton /> : null}
             </div>
           </div>
           <AvatarSelector
             onAvatarSelected={handleAvatarSelected}
             selectedAvatar={selectedAvatar}
           />
+          {hasProfile ? (
+            <p className="text-center font font-semibold text-md pt-5">
+              Completa los campos para editar tu perfil
+            </p>
+          ) : (
+            <p className="text-center font font-semibold text-md pt-5">
+              Completa los campos para crear tu perfil
+            </p>
+          )}
           <div className="flex flex-wrap sm:gap-4">
             <Input
               value={name}

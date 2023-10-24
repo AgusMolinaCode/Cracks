@@ -2,7 +2,7 @@
 import React from "react";
 import { Poppins } from "next/font/google";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import Signed from "@/components/sections/Navbar/Signed";
+import Signed from "@/app/components/sections/Navbar/Signed";
 import {
   Navbar,
   NavbarBrand,
@@ -23,8 +23,6 @@ const inter = Poppins({
 
 export default function NavbarScroll() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
-  const menuItems = ["Mi perfil"];
 
   return (
     <Navbar

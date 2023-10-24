@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Providers } from "./providers";
 import { ClerkProv } from "./ClerkProv";
-import NavbarScroll from "@/components/sections/Navbar/NavbarScroll";
-import Footer from "@/components/sections/Footer/Footer";
+import NavbarScroll from "@/app/components/sections/Navbar/NavbarScroll";
+import Footer from "@/app/components/sections/Footer/Footer";
 
 const inter = Poppins({
   weight: ["100", "400", "600", "800"],

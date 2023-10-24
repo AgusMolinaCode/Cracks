@@ -41,7 +41,10 @@ const PlayerModal: React.FC<PlayerModalProps> = ({
                 <p>{description}</p>
                 <p>
                   Ciudad: <span className="font-bold">{city}</span>
-                  Posicion favorita: <span className="font-bold">{soccerPlayerType}</span>
+                </p>
+                <p>
+                  Posicion favorita:{" "}
+                  <span className="font-bold">{soccerPlayerType}</span>
                 </p>
               </ModalBody>
               <ModalFooter>

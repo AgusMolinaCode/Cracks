@@ -8,13 +8,13 @@ import ciudades from "./Data/Ciudades";
 import Posiciones from "./Data/Posiciones";
 import AvatarSelector from "./AvatarSelector";
 import DeleteButton from "./DeleteButton";
-import { Profile } from "../../../../libs/interfaces/Profile";
 import EditButton from "./EditButton";
 
 const notify = () => toast.success("Nuevo usuario creado!");
 const notifyEditar = () => toast.success("Usuario editado!");
 
 export default function Inputs() {
+
   const { userId } = useAuth();
 
   const [name, setName] = useState("");

@@ -22,7 +22,7 @@ const Footer = () => {
               >
                 <span className="sr-only"> GitHub </span>
                 <svg
-                  className="w-8 h-8"
+                  className="w-9 h-9"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
